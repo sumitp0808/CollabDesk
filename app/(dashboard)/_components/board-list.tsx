@@ -1,4 +1,5 @@
-
+//need for wrapping component using useAuth()
+import { ClerkProvider } from "@clerk/nextjs";
 import {useQuery} from "convex/react";
 
 import {api} from "@/convex/_generated/api";
@@ -7,6 +8,7 @@ import { EmptySearch } from "./empty-search";
 import { EmptyBoards } from "./empty-boards";
 import { BoardCard } from "./board-card/index";
 import { NewBoardButton } from "./new-board-button";
+import { Suspense } from "react";
 
 interface BoardListProps {
     orgId: string;
@@ -19,7 +21,7 @@ export const BoardList = ({
     orgId,
     query,
 }: BoardListProps) => {
-    const data= useQuery(api.boards.get, {orgId});
+    const data= useQuery(api.boards.get, {orgId, search: query.search});
 
     if(data==undefined){
         return(
@@ -53,10 +55,12 @@ export const BoardList = ({
     return (
         <div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-5 mt-8 pb-10">
+                <ClerkProvider dynamic>
                 <NewBoardButton
                     orgId={orgId}
                 />
                 {data?.map((board) => (
+                    
                     <BoardCard 
                         key={board._id}
                         id={board._id}
@@ -68,6 +72,7 @@ export const BoardList = ({
                         orgId={board.orgId}
                     />
                 ))}
+                </ClerkProvider>
             </div>
         </div>
     )

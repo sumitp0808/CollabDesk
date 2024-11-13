@@ -63,11 +63,11 @@ export const OrgSidebar = () => {
                 size="lg"
                 className="font-normal justify-start px-2 w-full"
             >
-                <Link href="/">
-                    <LayoutDashboard className="h-4 w-4 mr-2"/>
-                    Team Desks
-                </Link>
-            </Button>
+                <div>
+                <LayoutDashboard className="h-4 w-4 mr-2"/>
+                Team Desks
+                </div>
+                </Button>
            </div>
         </div>
     );

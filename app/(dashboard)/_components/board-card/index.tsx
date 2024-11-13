@@ -11,6 +11,7 @@ import {Overlay} from "./overlay";
 import { Footer } from "./footer";
 import { Actions } from "@/components/actions";
 
+
 interface BoardCardProps {
     id: string;
     title:string;

@@ -6,6 +6,7 @@ import { useApiMutation } from "@/hooks/use-api-mutation";
 import { cn } from "@/lib/utils";
 
 import { Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface NewBoardButtonProps {
     orgId: string;
@@ -16,6 +17,7 @@ export const NewBoardButton = ({
     orgId,
     disabled,
 }:NewBoardButtonProps) => {
+    const router = useRouter();
     const {mutate, pending} = useApiMutation(api.board.create);
     
     const onClick = () => {
@@ -25,6 +27,7 @@ export const NewBoardButton = ({
         })
             .then((id) => {
                 toast.success("Desk Created");
+                router.push('/board/${id}');
             })
             .catch(() => toast.error("Failed to create Desk"));  
     };
@@ -38,11 +41,12 @@ export const NewBoardButton = ({
                 (pending || disabled) && "opacity-75 hover:bg-blue-600 cursor-not-allowed"
             )}
         >
-            <div />
+            <div>
             <Plus className="h-12 w-12 text-white stroke-1" />
             <p className="text-sm text-white font-light">
                 New Desk
             </p>
+            </div>
         </button>
     );
 };
